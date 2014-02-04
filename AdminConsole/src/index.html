@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Admin</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css"/>
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body ng-app="app" ng-controller="UserAdminController">
+    <h1>Users</h1>
+    <div id="userGrid">
+        <div class="pure-g" data-index="" ng-repeat="user in users">
+            <div class="pure-u-1-3">
+                <span ng-bind="user.name"></span>
+            </div>
+            <div class="pure-u-1-3">
+                <span ng-bind="user.type"></span>
+            </div>
+            <div class="pure-u-1-3">
+                <div class="password-change">
+                    <input ng-class="inputClass($index)" type="text" ng-model="user.password" placeholder="Set Password"/>
+                    <button class="pure-button" ng-class="inputClass($index)"
+                            ng-click="setPassword(user.name, user.password)">Confirm</button>
+                    <button class="pure-button" ng-class="buttonClass($index)"
+                            ng-click="changePassword($index)">Change Password</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+    <script>
+        var app = angular.module("app", [])
+                .factory("UserService", function(){
+
+                })
+
+                .controller("UserAdminController", function($scope){
+                    $scope.editingIndex = -1;
+
+                    $scope.users = [
+                        {
+                            name: "testuser1",
+                            type: "Admin"
+                        },
+                        {
+                            name: "distributor",
+                            type: "Client"
+                        }
+                    ];
+
+                    $scope.inputClass = function(index) {
+                        return $scope.editingIndex == index ? "" : "hide";
+                    };
+
+                    $scope.buttonClass = function(index) {
+                        return $scope.editingIndex == index ? "hide" : "";
+                    };
+
+                    $scope.changePassword = function(username, password){
+
+                    }
+
+
+                });
+    </script>
+</body>
+</html>
