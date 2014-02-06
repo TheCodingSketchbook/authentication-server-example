@@ -20,17 +20,12 @@
                 <span ng-bind="user.type"></span>
             </div>
             <div class="pure-u-1-3">
-                <div class="password-change">
-                    <input ng-class="inputClass($index)" type="text" ng-model="user.password" placeholder="Set Password"/>
-                    <button class="pure-button" ng-class="inputClass($index)"
-                            ng-click="setPassword(user.name, user.password)">Confirm</button>
-                    <button class="pure-button" ng-class="buttonClass($index)"
-                            ng-click="changePassword($index)">Change Password</button></div>
-                </div>
+                <div password-entry name="{{user.name}}"/>
             </div>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.js"></script>
     <script>
         var app = angular.module("app", [])
                 .factory("UserService", function(){
@@ -50,20 +45,28 @@
                             type: "Client"
                         }
                     ];
+                })
 
-                    $scope.inputClass = function(index) {
-                        return $scope.editingIndex == index ? "" : "hide";
+                .directive("passwordEntry", function(){
+                    return {
+                        restrict: "AE",
+                        replace: "true",
+                        templateUrl: "password-entry.html",
+                        scope: {
+                            name: "@"
+                        },
+                        controller: function($scope) {
+                            $scope.isEditing = false;
+
+                            $scope.changePassword = function(){
+
+                            };
+
+                            $scope.doneEditing = function(){
+                                $scope.isEditing = false;
+                            };
+                        }
                     };
-
-                    $scope.buttonClass = function(index) {
-                        return $scope.editingIndex == index ? "hide" : "";
-                    };
-
-                    $scope.changePassword = function(username, password){
-
-                    }
-
-
                 });
     </script>
 </body>
